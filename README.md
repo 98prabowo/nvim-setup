@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="assets/neovim.png" width="80%">
+  <img src="assets/neovim.png" width="40%">
 </p>
 
 # ✨ Neovim Setup
