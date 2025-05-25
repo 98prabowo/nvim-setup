@@ -23,35 +23,29 @@ A modern, minimal yet powerful Neovim configuration built with Lua, designed for
 
 1. Clone this repo to your dotfile directory:
 
-```zsh
+```sh-session
 git clone git@github.com:98prabowo/nvim-setup.git
 ```
 
-2. Navigate to parent directory:
+2. Stow Neovim setup files to config directory:
 
-```zsh
-cd ..
+```sh-session
+stow -t ~/.config/nvim setup
 ```
 
-3. Stow Neovim setup files to config directory:
+3. Start Neovim:
 
-```zsh
-stow -t ~/.config/nvim nvim
-```
-
-4. Start Neovim:
-
-```zsh
+```sh-session
 nvim
 ```
 
-5. Update Neovim dependency and setup (run inside vim script):
+4. Update Neovim dependency and setup (run inside vim script):
 
 ```vim
 :PackerSync
 ```
 
-6. Restart Neovim and enjoy!
+5. Restart Neovim and enjoy!
 
 ## 🛠 Dependencies
 
