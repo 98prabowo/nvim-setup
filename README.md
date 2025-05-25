@@ -41,7 +41,7 @@ stow -t ~/.config/nvim nvim
 nvim
 ```
 
-5. Update Neovim dependency and setup:
+5. Update Neovim dependency and setup (run inside vim script):
 
 ```vim
 :PackerSync
@@ -63,11 +63,15 @@ nvim
 
 ## 🔑 Key Bindings
 
-|       Action       |    Key     |
-| :----------------: | :--------: |
-|    File search     | <leader>ff |
-|     Live grep      | <leader>fs |
-| Open file explorer | <leader>e  |
+|       Action       |     Key      |
+| :----------------: | :----------: |
+|    File search     | `<leader>ff` |
+|     Live grep      | `<leader>fs` |
+| Open file explorer | `<leader>e`  |
+
+## 📸 Screenshots
+
+![Screenshot](assets/dimvim-dashboard.png)
 
 ## 📄 License
 
