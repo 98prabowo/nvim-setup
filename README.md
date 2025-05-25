@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="assets/neovim.png" width="80%">
+</p>
+
 # ✨ Neovim Setup
 
 A modern, minimal yet powerful Neovim configuration built with Lua, designed for speed, productivity, and a great developer experience.
