@@ -38,23 +38,50 @@ mason_lspconfig.setup({
 	},
 	-- auto-install configured servers (with lspconfig)
 	automatic_installation = true, -- not the same as ensure_installed
-  automatic_enable = false,
+	automatic_enable = false,
 })
 
 mason_null_ls.setup({
 	-- list of formatters & linters for mason to install
 	ensure_installed = {
+		-- JavaScript / TypeScript
 		"prettier", -- ts/js formatter
+
+		-- Lua
 		"stylua", -- lua formatter
-		-- "eslint_d", -- ts/js linter
-		"fixjson", -- json formatter
-		"pylint", -- python linter
-		"isort", -- python sorter
+
+		-- Python
 		"black", -- python formatter
-		"sqlfluff", -- sql linter/formatter
-		"yamllint", -- yaml linter
+		"isort", -- python sorter
+
+		-- Golang
+		"gofmt", -- golang formatter
+		"goimports", -- golang auto imports
+		"goimports_reviser", -- golang ordering imports
+		"golangci_lint", -- golang diagnostic
+		"impl", -- golang action
+
+		-- C, C++, C#, Java, Cuda
 		"clang_format", -- c, c++, c#, java, cuda formatter
-		"golangci_lint", -- golang formatter
+
+		-- Swift
+		"swiftformat", -- swift formatter
+		"swiftlint", -- swift linter
+
+		-- Java
+		"google_java_format", -- java formatter with google style
+
+		-- Kotlin
+		"ktlint", -- kotlin formatter and diagnostic
+
+		-- SQL
+		"sqlfluff", -- sql linter/formatter
+
+		-- YAML
+		"yamllint", -- yaml linter
+
+		-- Shell
+		"shfmt", -- shell formatter
 	},
 	-- auto-install configured formatters & linters (with null-ls)
 	automatic_installation = true,

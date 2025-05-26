@@ -81,9 +81,6 @@ return packer.startup(function(use)
 	use({ "nvim-telescope/telescope-fzf-native.nvim", run = "make" }) -- dependency for better sorting performance
 	use({ "nvim-telescope/telescope.nvim", branch = "0.1.x", requires = { { "nvim-lua/plenary.nvim" } } }) -- fuzzy finder
 
-	-- fast file switching
-	use("theprimeagen/harpoon")
-
 	-- undo history tree
 	use("mbbill/undotree")
 
@@ -116,8 +113,8 @@ return packer.startup(function(use)
 	use("lvimuser/lsp-inlayhints.nvim") -- inline hint
 
 	-- formatting & linting
-	use("jose-elias-alvarez/null-ls.nvim") -- configure formatters & linters
-	use("jayp0521/mason-null-ls.nvim") -- bridges gap b/w mason & null-ls
+	use("nvimtools/none-ls.nvim") -- configure formatters & linters
+	use("jay-babu/mason-null-ls.nvim") -- bridges gap b/w mason & null-ls
 
 	-- treesitter configuration
 	use({

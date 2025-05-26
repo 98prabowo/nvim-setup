@@ -41,6 +41,15 @@ local on_attach = function(client, bufnr)
 	if client.name == "rust_analyzer" then
 		keymap.set("n", "<C-space>", rust.hover_actions.hover_actions, { buffer = bufnr }) -- Hover actions
 		keymap.set("n", "<Leader>a", rust.code_action_group.code_action_group, { buffer = bufnr }) -- Code action groups
+
+		if client.server_capabilities.documentFormattingProvider then
+			vim.api.nvim_create_autocmd("BuffWritePre", {
+				buffer = bufnr,
+				callback = function()
+					vim.lsp.buf.format({ async = false })
+				end,
+			})
+		end
 	end
 end
 
@@ -110,6 +119,13 @@ rust.setup({
 	server = {
 		capabilities = capabilities,
 		on_attach = on_attach,
+	},
+	settings = {
+		["rust-analyzer"] = {
+			checkOnSave = {
+				command = "clippy",
+			},
+		},
 	},
 })
 
