@@ -27,10 +27,10 @@ A modern, minimal yet powerful Neovim configuration built with Lua, designed for
 git clone git@github.com:98prabowo/nvim-setup.git
 ```
 
-2. Stow Neovim setup files to config directory:
+2. Link Neovim setup files to config directory:
 
 ```sh-session
-stow -t ~/.config/nvim setup
+make link
 ```
 
 3. Start Neovim:
