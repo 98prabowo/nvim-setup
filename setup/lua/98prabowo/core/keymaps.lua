@@ -47,6 +47,10 @@ keymap.set("n", "<leader>y", '"+Y') -- copy code in normal mode inside nvim
 
 keymap.set("n", "<leader>s", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]])
 
+-- navigation
+keymap.set("n", "<leader>bn", ":bn<CR>")
+keymap.set("n", "<leader>bp", ":bp<CR>")
+
 ----------------------
 -- Plugin Keybinds
 ----------------------
