@@ -1,4 +1,4 @@
--- import lspconfig plugin safely
+-- import lspconfi
 local lspconfig_status, lspconfig = pcall(require, "lspconfig")
 if not lspconfig_status then
 	return
@@ -39,16 +39,21 @@ local on_attach = function(client, bufnr)
 
 	-- rust specific keymaps
 	if client.name == "rust_analyzer" then
-		keymap.set("n", "<C-space>", rust.hover_actions.hover_actions, { buffer = bufnr }) -- Hover actions
-		keymap.set("n", "<Leader>a", rust.code_action_group.code_action_group, { buffer = bufnr }) -- Code action groups
+		keymap.set("n", "<C-space>", vim.lsp.buf.hover, opts) -- Hover actions
+		keymap.set("n", "<Leader>a", vim.lsp.buf.code_action, opts) -- Code action groups
 
-		if client.server_capabilities.documentFormattingProvider then
-			vim.api.nvim_create_autocmd("BuffWritePre", {
+		if client.supports_method("textDocument/formatting") then
+			vim.api.nvim_create_autocmd("BufWritePre", {
+				group = vim.api.nvim_create_augroup("RustFormat", { clear = true }),
 				buffer = bufnr,
 				callback = function()
 					vim.lsp.buf.format({ async = false })
 				end,
 			})
+		end
+
+		if client.supports_method("textDocument/inlayHint") then
+			vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
 		end
 	end
 end
@@ -56,90 +61,106 @@ end
 -- used to enable autocompletion (assign to every lsp server config)
 local capabilities = cmp_nvim_lsp.default_capabilities()
 
-lspconfig["arduino_language_server"].setup({
+lspconfig.arduino_language_server.setup({
 	capabilities = capabilities,
 	on_attach = on_attach,
 })
 
-lspconfig["bashls"].setup({
+lspconfig.bashls.setup({
 	capabilities = capabilities,
 	on_attach = on_attach,
 })
 
-lspconfig["clangd"].setup({
+lspconfig.clangd.setup({
 	capabilities = capabilities,
 	on_attach = on_attach,
 })
 
-lspconfig["gopls"].setup({
+lspconfig.gopls.setup({
 	capabilities = capabilities,
 	on_attach = on_attach,
 })
 
-lspconfig["graphql"].setup({
+lspconfig.graphql.setup({
 	capabilities = capabilities,
 	on_attach = on_attach,
 })
 
-lspconfig["jedi_language_server"].setup({
+lspconfig.jedi_language_server.setup({
 	capabilities = capabilities,
 	on_attach = on_attach,
 })
 
-lspconfig["jsonls"].setup({
+lspconfig.jsonls.setup({
 	capabilities = capabilities,
 	on_attach = on_attach,
 })
 
-lspconfig["lemminx"].setup({
+lspconfig.lemminx.setup({
 	capabilities = capabilities,
 	on_attach = on_attach,
 })
 
-lspconfig["ltex"].setup({
+lspconfig.ltex.setup({
 	capabilities = capabilities,
 	on_attach = on_attach,
 })
 
--- configure rust server with plugin
-rust.setup({
-	tools = {
-		inlay_hints = {
-			auto = true, -- Enable hints automatically
-			show_parameter_hints = true, -- Disable parameter hints
-			parameter_hints_prefix = "-", -- No prefix for parameter hints
-			other_hints_prefix = ": ", -- Mimic Rust type syntax
-			right_align = false, -- Disable right alignment
-			right_align_padding = 0, -- No padding for right alignment
-			max_len_align = false, -- Disable alignment to max length
-			max_len_align_padding = 0, -- No padding for max length alignment
-			highlight = "Comment", -- Optional: Different color for hints
-		},
-	},
-	server = {
-		capabilities = capabilities,
-		on_attach = on_attach,
-	},
+lspconfig.rust_analyzer.setup({
+	capabilities = capabilities,
+	on_attach = on_attach,
 	settings = {
 		["rust-analyzer"] = {
-			checkOnSave = {
+			cargo = {
+				allFeatures = true,
+			},
+			inlayHints = {
+				bindingModeHints = {
+					enable = true,
+				},
+				chainingHints = {
+					enable = true,
+				},
+				closureCaptureHints = {
+					enable = true,
+				},
+				closureReturnTypeHints = {
+					enable = true,
+				},
+				lifetimeElisionHints = {
+					enable = "always",
+					useParameterNames = true,
+				},
+				parameterHints = {
+					enable = true,
+				},
+				reborrowHints = {
+					enable = "always",
+				},
+				typeHints = {
+					enable = true,
+					hideClosureInitialization = false,
+					hideNamedConstructor = false,
+				},
+			},
+			check = {
 				command = "clippy",
 			},
 		},
 	},
 })
 
-lspconfig["sqlls"].setup({
+lspconfig.sqlls.setup({
 	capabilities = capabilities,
 	on_attach = on_attach,
 })
 
-lspconfig["yamlls"].setup({
+lspconfig.yamlls.setup({
 	capabilities = capabilities,
 	on_attach = on_attach,
 })
 
-lspconfig["ts_ls"].setup({
+lspconfig.ts_ls.setup({
 	cmd = { "typescript-language-server", "--stdio" }, -- Explicit command
 	filetypes = { "javascript", "javascriptreact", "javascript.jsx", "typescript", "typescriptreact", "typescript.tsx" },
 	root_dir = lspconfig.util.root_pattern("tsconfig.json", "package.json", "jsconfig.json", ".git"),
@@ -148,11 +169,10 @@ lspconfig["ts_ls"].setup({
 	single_file_support = true,
 })
 
--- configure lua server (with special settings)
-lspconfig["lua_ls"].setup({
+lspconfig.lua_ls.setup({
 	capabilities = capabilities,
 	on_attach = on_attach,
-	settings = { -- custom settings for lua
+	settings = {
 		Lua = {
 			-- make the language server recognize "vim" global
 			diagnostics = {
