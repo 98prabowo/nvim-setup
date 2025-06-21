@@ -1,6 +1,6 @@
--- import null-ls plugin safely
-local setup, none_ls = pcall(require, "null-ls")
-if not setup then
+local none_ls_setup, none_ls = pcall(require, "null-ls")
+if not none_ls_setup then
+	vim.notify("None ls not installed", vim.log.levels.ERROR)
 	return
 end
 

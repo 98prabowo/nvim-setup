@@ -1,11 +1,14 @@
--- import lualine plugin safely
-local status, lualine = pcall(require, "lualine")
-if not status then
+local lualine_status, lualine = pcall(require, "lualine")
+if not lualine_status then
+	vim.notify("Lualine not installed", vim.log.levels.ERROR)
 	return
 end
 
--- get lualine gruvbox theme
-local lualine_gruvbox = require("lualine.themes.gruvbox")
+local gruvbox_setup, gruvbox = pcall(require, "lualine.themes.gruvbox")
+if not gruvbox_setup then
+	vim.notify("Lualine gruvbox not installed", vim.log.levels.WARN)
+	return
+end
 
 local gruvbox_color = {
 	red = "#FB4934",
@@ -18,12 +21,11 @@ local gruvbox_color = {
 	gray = "#928374",
 }
 
-lualine_gruvbox.normal.a.bg = gruvbox_color.green
+gruvbox.normal.a.bg = gruvbox_color.green
 
--- configure lualine with modified theme
 lualine.setup({
 	options = {
-		theme = lualine_gruvbox,
+		theme = gruvbox,
 		icon_enabled = true,
 	},
 	sections = {

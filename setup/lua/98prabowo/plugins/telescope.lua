@@ -1,14 +1,15 @@
 local telescope_setup, telescope = pcall(require, "telescope")
 if not telescope_setup then
+	vim.notify("telescope not installed", vim.log.levels.ERROR)
 	return
 end
 
 local actions_setup, actions = pcall(require, "telescope.actions")
 if not actions_setup then
+	vim.notify("telescope.actions not installed", vim.log.levels.ERROR)
 	return
 end
 
--- configure telescope
 telescope.setup({
 	-- configure custom mappings
 	defaults = {

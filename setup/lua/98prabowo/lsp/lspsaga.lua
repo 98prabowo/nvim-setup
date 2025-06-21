@@ -1,6 +1,6 @@
--- import lspsaga safely
 local saga_status, saga = pcall(require, "lspsaga")
 if not saga_status then
+	vim.notify("LSP saga not installed", vim.log.levels.ERROR)
 	return
 end
 

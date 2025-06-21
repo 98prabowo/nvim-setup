@@ -1,6 +1,6 @@
 local gruvbox_status, gruvbox = pcall(require, "gruvbox")
 if not gruvbox_status then
-	print("Gruvbox not found!")
+	vim.notify("Gruvbox theme not installed", vim.log.levels.ERROR)
 	return
 end
 

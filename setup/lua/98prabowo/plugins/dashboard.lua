@@ -1,11 +1,13 @@
 local alpha_setup, alpha = pcall(require, "alpha")
 if not alpha_setup then
-  return
+	vim.notify("Alpha not installed", vim.log.levels.ERROR)
+	return
 end
 
 local dashboard_setup, dashboard = pcall(require, "alpha.themes.dashboard")
 if not dashboard_setup then
-  return
+	vim.notify("Alpha theme not installed", vim.log.levels.ERROR)
+	return
 end
 
 -- Customize header ASCII art or text

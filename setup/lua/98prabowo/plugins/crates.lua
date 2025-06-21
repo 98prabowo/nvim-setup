@@ -1,6 +1,6 @@
--- import crates plugin safely
-local setup, crates = pcall(require, "crates")
-if not setup then
+local crates_setup, crates = pcall(require, "crates")
+if not crates_setup then
+	vim.notify("Crates not installed", vim.log.levels.ERROR)
 	return
 end
 

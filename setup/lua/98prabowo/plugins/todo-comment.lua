@@ -1,5 +1,6 @@
-local setup, todo = pcall(require, "todo-comments")
-if not setup then
+local todo_setup, todo = pcall(require, "todo-comments")
+if not todo_setup then
+	vim.notify("todo-comments not installed", vim.log.levels.WARN)
 	return
 end
 
