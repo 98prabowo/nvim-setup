@@ -119,6 +119,12 @@ return packer.startup(function(use)
 		requires = { "nvim-lua/plenary.nvim" },
 	})
 
+	-- highlight comment mark
+	use({
+		"folke/todo-comments.nvim",
+		requires = { "nvim-lua/plenary.nvim" },
+	})
+
 	-- formatting & linting
 	use("nvimtools/none-ls.nvim") -- configure formatters & linters
 	use("jay-babu/mason-null-ls.nvim") -- bridges gap b/w mason & null-ls
