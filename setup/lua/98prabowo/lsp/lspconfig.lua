@@ -124,6 +124,10 @@ lspconfig.rust_analyzer.setup({
 				closureCaptureHints = {
 					enable = true,
 				},
+				closingBraceHints = {
+					enable = true,
+					minLines = 250,
+				},
 				closureReturnTypeHints = {
 					enable = true,
 				},
