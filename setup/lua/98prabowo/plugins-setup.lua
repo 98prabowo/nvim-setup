@@ -43,9 +43,6 @@ return packer.startup(function(use)
 	-- lua functions that many plugins use
 	use("nvim-lua/plenary.nvim")
 
-	-- nightfly colorscheme
-	use("bluz71/vim-nightfly-guicolors")
-
 	-- colorscheme
 	use("ellisonleao/gruvbox.nvim")
 
@@ -108,7 +105,6 @@ return packer.startup(function(use)
 			{ "nvim-treesitter/nvim-treesitter" },
 		},
 	}) -- enhanced lsp uis
-	use("simrat39/rust-tools.nvim") -- additional functionality for rust server
 	use("onsails/lspkind.nvim") -- vs-code like icons for autocompletion
 	use("lvimuser/lsp-inlayhints.nvim") -- inline hint
 
