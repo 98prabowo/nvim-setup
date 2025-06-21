@@ -1,22 +1,27 @@
--- import mason plugin safely
 local mason_status, mason = pcall(require, "mason")
 if not mason_status then
+	vim.notify("Mason not installed", vim.log.levels.ERROR)
 	return
 end
 
--- import mason-lspconfig plugin safely
 local mason_lspconfig_status, mason_lspconfig = pcall(require, "mason-lspconfig")
 if not mason_lspconfig_status then
+	vim.notify("Mason lsp config not installed", vim.log.levels.ERROR)
 	return
 end
 
--- import mason-null-ls plugin safely
 local mason_null_ls_status, mason_null_ls = pcall(require, "mason-null-ls")
 if not mason_null_ls_status then
+	vim.notify("Mason null ls not installed", vim.log.levels.ERROR)
 	return
 end
 
--- enable mason
+local mason_nvim_dap_status, mason_nvim_dap = pcall(require, "mason-nvim-dap")
+if not mason_nvim_dap_status then
+	vim.notify("Mason dap not installed", vim.log.levels.ERROR)
+	return
+end
+
 mason.setup()
 
 mason_lspconfig.setup({
@@ -84,5 +89,14 @@ mason_null_ls.setup({
 		"shfmt", -- shell formatter
 	},
 	-- auto-install configured formatters & linters (with null-ls)
+	automatic_installation = true,
+})
+
+mason_nvim_dap.setup({
+	-- list of debuggers for mason to install
+	ensure_installed = {
+		"codelldb",
+	},
+	-- auto-install configured debugger
 	automatic_installation = true,
 })
