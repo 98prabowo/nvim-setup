@@ -1,18 +1,12 @@
--- import lspconfi
 local lspconfig_status, lspconfig = pcall(require, "lspconfig")
 if not lspconfig_status then
+	vim.notify("LSP config not installed", vim.log.levels.ERROR)
 	return
 end
 
--- import cmp-nvim-lsp plugin safely
 local cmp_nvim_lsp_status, cmp_nvim_lsp = pcall(require, "cmp_nvim_lsp")
 if not cmp_nvim_lsp_status then
-	return
-end
-
--- import rust plugin safely
-local rust_setup, rust = pcall(require, "rust-tools")
-if not rust_setup then
+	vim.notify("CMP nvim lsp not installed", vim.log.levels.ERROR)
 	return
 end
 
