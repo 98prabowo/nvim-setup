@@ -71,3 +71,8 @@ telescope.setup({
 })
 
 telescope.load_extension("todo-comments")
+telescope.load_extension("dap")
+
+vim.api.nvim_create_user_command("DapBreakpoints", function()
+	telescope.extensions.dap.list_breakpoints()
+end, {})
