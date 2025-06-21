@@ -125,6 +125,24 @@ return packer.startup(function(use)
 	use("nvimtools/none-ls.nvim") -- configure formatters & linters
 	use("jay-babu/mason-null-ls.nvim") -- bridges gap b/w mason & null-ls
 
+	-- debugger
+	use({ "mfussenegger/nvim-dap" })
+	use({
+		"rcarriga/nvim-dap-ui",
+		requires = {
+			"mfussenegger/nvim-dap",
+			"nvim-neotest/nvim-nio",
+		},
+	})
+	use({
+		"jay-babu/mason-nvim-dap.nvim",
+		requires = { "williamboman/mason.nvim" },
+	})
+	use({
+		"nvim-telescope/telescope-dap.nvim",
+		requires = { "mfussenegger/nvim-dap" },
+	})
+
 	-- treesitter configuration
 	use({
 		"nvim-treesitter/nvim-treesitter",

@@ -164,6 +164,11 @@ _G.packer_plugins = {
     path = "/Users/dimasprabowo/.local/share/nvim/site/pack/packer/start/mason-null-ls.nvim",
     url = "https://github.com/jay-babu/mason-null-ls.nvim"
   },
+  ["mason-nvim-dap.nvim"] = {
+    loaded = true,
+    path = "/Users/dimasprabowo/.local/share/nvim/site/pack/packer/start/mason-nvim-dap.nvim",
+    url = "https://github.com/jay-babu/mason-nvim-dap.nvim"
+  },
   ["mason.nvim"] = {
     loaded = true,
     path = "/Users/dimasprabowo/.local/share/nvim/site/pack/packer/start/mason.nvim",
@@ -184,10 +189,25 @@ _G.packer_plugins = {
     path = "/Users/dimasprabowo/.local/share/nvim/site/pack/packer/start/nvim-cmp",
     url = "https://github.com/hrsh7th/nvim-cmp"
   },
+  ["nvim-dap"] = {
+    loaded = true,
+    path = "/Users/dimasprabowo/.local/share/nvim/site/pack/packer/start/nvim-dap",
+    url = "https://github.com/mfussenegger/nvim-dap"
+  },
+  ["nvim-dap-ui"] = {
+    loaded = true,
+    path = "/Users/dimasprabowo/.local/share/nvim/site/pack/packer/start/nvim-dap-ui",
+    url = "https://github.com/rcarriga/nvim-dap-ui"
+  },
   ["nvim-lspconfig"] = {
     loaded = true,
     path = "/Users/dimasprabowo/.local/share/nvim/site/pack/packer/start/nvim-lspconfig",
     url = "https://github.com/neovim/nvim-lspconfig"
+  },
+  ["nvim-nio"] = {
+    loaded = true,
+    path = "/Users/dimasprabowo/.local/share/nvim/site/pack/packer/start/nvim-nio",
+    url = "https://github.com/nvim-neotest/nvim-nio"
   },
   ["nvim-tree.lua"] = {
     loaded = true,
@@ -220,6 +240,11 @@ _G.packer_plugins = {
     loaded = true,
     path = "/Users/dimasprabowo/.local/share/nvim/site/pack/packer/start/plenary.nvim",
     url = "https://github.com/nvim-lua/plenary.nvim"
+  },
+  ["telescope-dap.nvim"] = {
+    loaded = true,
+    path = "/Users/dimasprabowo/.local/share/nvim/site/pack/packer/start/telescope-dap.nvim",
+    url = "https://github.com/nvim-telescope/telescope-dap.nvim"
   },
   ["telescope-fzf-native.nvim"] = {
     loaded = true,
