@@ -4,18 +4,6 @@ if not todo_setup then
 	return
 end
 
--- Keybind setup
-
-vim.keymap.set("n", "]t", function()
-	todo.jump_next()
-end, { desc = "Next todo comment" })
-
-vim.keymap.set("n", "[t", function()
-	todo.jump_prev()
-end, { desc = "Previous todo comment" })
-
--- Color setup
-
 local gruvbox_color = {
 	white = "#EBDBB2",
 	black = "#1D2021",
