@@ -23,6 +23,7 @@
 
 # Compiled Lua sources
 luac.out
+setup/plugin/packer_compiled.lua
 
 # luarocks build files
 *.src.rock
