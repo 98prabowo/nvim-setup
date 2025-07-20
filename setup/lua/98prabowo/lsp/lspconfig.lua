@@ -148,6 +148,11 @@ lspconfig.rust_analyzer.setup({
 	},
 })
 
+lspconfig.sourcekit.setup({
+	capabilities = capabilities,
+	on_attach = on_attach,
+})
+
 lspconfig.sqlls.setup({
 	capabilities = capabilities,
 	on_attach = on_attach,
