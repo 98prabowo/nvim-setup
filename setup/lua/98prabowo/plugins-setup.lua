@@ -160,6 +160,16 @@ return packer.startup(function(use)
 	use("lewis6991/gitsigns.nvim") -- show line modifications on left hand side
 	use("tpope/vim-fugitive") -- git command helper
 
+	-- leetcode
+	use({
+		"kawre/leetcode.nvim",
+		requires = {
+			"nvim-lua/plenary.nvim",
+			"MunifTanjim/nui.nvim",
+			"nvim-telescope/telescope.nvim",
+		},
+	})
+
 	-- Automatically set up your configuration after cloning packer.nvim
 	-- Put this at the :PackerCompile end after all plugins
 	if packer_bootstrap then
