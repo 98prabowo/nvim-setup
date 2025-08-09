@@ -35,7 +35,6 @@ mason_lspconfig.setup({
 		"jedi_language_server", -- Python
 		"jsonls", -- JSON
 		"lemminx", -- XML
-		"ltex", -- Latex
 		"lua_ls", -- Lua
 		"rust_analyzer", -- Rust
 		"sqlls", -- SQL

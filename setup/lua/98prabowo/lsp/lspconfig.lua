@@ -80,6 +80,11 @@ lspconfig.graphql.setup({
 	on_attach = on_attach,
 })
 
+lspconfig.html.setup({
+	capabilities = capabilities,
+	on_attach = on_attach,
+})
+
 lspconfig.jedi_language_server.setup({
 	capabilities = capabilities,
 	on_attach = on_attach,
@@ -91,11 +96,6 @@ lspconfig.jsonls.setup({
 })
 
 lspconfig.lemminx.setup({
-	capabilities = capabilities,
-	on_attach = on_attach,
-})
-
-lspconfig.ltex.setup({
 	capabilities = capabilities,
 	on_attach = on_attach,
 })

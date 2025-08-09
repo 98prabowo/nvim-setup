@@ -21,6 +21,7 @@ treesitter.setup({
 		"gitignore",
 		"go",
 		"graphql",
+		"html",
 		"json",
 		"lua",
 		"markdown",
