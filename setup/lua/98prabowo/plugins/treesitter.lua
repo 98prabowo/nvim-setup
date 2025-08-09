@@ -17,6 +17,7 @@ treesitter.setup({
 	ensure_installed = {
 		"bash",
 		"c",
+		"css",
 		"dockerfile",
 		"gitignore",
 		"go",
