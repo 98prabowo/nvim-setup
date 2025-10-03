@@ -71,8 +71,8 @@ keymap.set(
 )
 
 -- navigation
-keymap.set("n", "<leader>n,", ":bn<CR>", { desc = "Navigate to next file" })
-keymap.set("n", "<leader>n.", ":bp<CR>", { desc = "Navigate to previous file" })
+keymap.set("n", "<leader>n,", ":bp<CR>", { desc = "Navigate to previous file" })
+keymap.set("n", "<leader>n.", ":bn<CR>", { desc = "Navigate to next file" })
 
 ----------------------
 -- Plugin Keybinds
