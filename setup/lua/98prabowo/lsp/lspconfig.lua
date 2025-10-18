@@ -158,9 +158,10 @@ lspconfig.sourcekit.setup({
 	on_attach = on_attach,
 })
 
-lspconfig.sqlls.setup({
+lspconfig.postgres_lsp.setup({
 	capabilities = capabilities,
 	on_attach = on_attach,
+	root_dir = lspconfig.util.root_pattern(".git", "sql.yml", "pgconfig.toml", "postgrestools.jsonc", "."),
 })
 
 lspconfig.yamlls.setup({
