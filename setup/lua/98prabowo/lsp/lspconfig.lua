@@ -1,9 +1,3 @@
-local lspconfig_status, lspconfig = pcall(require, "lspconfig")
-if not lspconfig_status then
-	vim.notify("LSP config not installed", vim.log.levels.ERROR)
-	return
-end
-
 local cmp_nvim_lsp_status, cmp_nvim_lsp = pcall(require, "cmp_nvim_lsp")
 if not cmp_nvim_lsp_status then
 	vim.notify("CMP nvim lsp not installed", vim.log.levels.ERROR)
@@ -55,57 +49,90 @@ end
 -- used to enable autocompletion (assign to every lsp server config)
 local capabilities = cmp_nvim_lsp.default_capabilities()
 
-lspconfig.arduino_language_server.setup({
+vim.lsp.config["arduino_language_server"] = {
+	cmd = { "arduino_language_server" },
+	filetypes = { "arduino" },
 	capabilities = capabilities,
 	on_attach = on_attach,
-})
+}
+vim.lsp.enable("arduino_language_server")
 
-lspconfig.bashls.setup({
+vim.lsp.config["bashls"] = {
+	cmd = { "bash-language-server", "start" },
+	filetypes = { "sh", "bash" },
 	capabilities = capabilities,
 	on_attach = on_attach,
-})
+}
+vim.lsp.enable("bashls")
 
-lspconfig.clangd.setup({
+vim.lsp.config["clangd"] = {
+	cmd = { "clangd" },
+	filetypes = { "c", "cpp", "objc", "objcpp" },
 	capabilities = capabilities,
 	on_attach = on_attach,
-})
+}
+vim.lsp.enable("clangd")
 
-lspconfig.cssls.setup({
+vim.lsp.config["cssls"] = {
+	cmd = { "vscode-css-language-server", "--stdio" },
+	filetypes = { "css", "scss", "less" },
 	capabilities = capabilities,
 	on_attach = on_attach,
-})
+}
+vim.lsp.enable("cssls")
 
-lspconfig.gopls.setup({
+vim.lsp.config["gopls"] = {
+	cmd = { "gopls" },
+	filetypes = { "go", "gomod", "gowork", "gotmpl" },
 	capabilities = capabilities,
 	on_attach = on_attach,
-})
+}
+vim.lsp.enable("gopls")
 
-lspconfig.graphql.setup({
+vim.lsp.config["graphql"] = {
+	cmd = { "graphql-lsp", "server", "-m", "stream" },
+	filetypes = { "graphql", "typescriptreact", "javascriptreact" },
 	capabilities = capabilities,
 	on_attach = on_attach,
-})
+}
+vim.lsp.enable("graphql")
 
-lspconfig.html.setup({
+vim.lsp.config["html"] = {
+	cmd = { "vscode-html-language-server", "--stdio" },
+	filetypes = { "html" },
 	capabilities = capabilities,
 	on_attach = on_attach,
-})
+}
+vim.lsp.enable("html")
 
-lspconfig.jedi_language_server.setup({
+vim.lsp.config["jedi_language_server"] = {
+	cmd = { "jedi-language-server" },
+	filetypes = { "python" },
 	capabilities = capabilities,
 	on_attach = on_attach,
-})
+}
+vim.lsp.enable("jedi_language_server")
 
-lspconfig.jsonls.setup({
+vim.lsp.config["jsonls"] = {
+	cmd = { "vscode-json-languageserver", "--stdio" },
+	filetypes = { "json", "jsonc" },
 	capabilities = capabilities,
 	on_attach = on_attach,
-})
+	single_file_support = true,
+}
+vim.lsp.enable("jsonls")
 
-lspconfig.lemminx.setup({
+vim.lsp.config["lemminx"] = {
+	cmd = { "lemminx" },
+	filetypes = { "xml", "xsd", "xsl", "xslt", "svg" },
 	capabilities = capabilities,
 	on_attach = on_attach,
-})
+}
+vim.lsp.enable("lemminx")
 
-lspconfig.rust_analyzer.setup({
+vim.lsp.config["rust_analyzer"] = {
+	cmd = { "rust-analyzer" },
+	filetypes = { "rust" },
 	capabilities = capabilities,
 	on_attach = on_attach,
 	settings = {
@@ -151,36 +178,57 @@ lspconfig.rust_analyzer.setup({
 			},
 		},
 	},
-})
+}
+vim.lsp.enable("rust_analyzer")
 
-lspconfig.sourcekit.setup({
+vim.lsp.config["sourcekit"] = {
+	cmd = { "sourcekit-lsp" },
+	filetypes = { "swift", "objective-c", "objective-cpp" },
 	capabilities = capabilities,
 	on_attach = on_attach,
-})
+}
+vim.lsp.enable("sourcekit")
 
-lspconfig.postgres_lsp.setup({
+vim.lsp.config["postgres_lsp"] = {
+	cmd = { "postgrestools" },
+	filetypes = { "sql", "pgsql" },
 	capabilities = capabilities,
 	on_attach = on_attach,
-	root_dir = lspconfig.util.root_pattern(".git", "sql.yml", "pgconfig.toml", "postgrestools.jsonc", "."),
-})
+	root_markers = { ".git", "sql.yml", "pgconfig.toml", "postgrestools.jsonc" },
+}
+vim.lsp.enable("postgres_lsp")
 
-lspconfig.yamlls.setup({
+vim.lsp.config["yamlls"] = {
+	cmd = { "yaml-language-server", "--stdio" },
+	filetypes = { "yaml", "yml" },
 	capabilities = capabilities,
 	on_attach = on_attach,
-})
+}
+vim.lsp.enable("yamlls")
 
-lspconfig.ts_ls.setup({
-	cmd = { "typescript-language-server", "--stdio" }, -- Explicit command
-	filetypes = { "javascript", "javascriptreact", "javascript.jsx", "typescript", "typescriptreact", "typescript.tsx" },
-	root_dir = lspconfig.util.root_pattern("tsconfig.json", "package.json", "jsconfig.json", ".git"),
+vim.lsp.config["ts_ls"] = {
+	cmd = { "typescript-language-server", "--stdio" },
+	filetypes = {
+		"javascript",
+		"javascriptreact",
+		"javascript.jsx",
+		"typescript",
+		"typescriptreact",
+		"typescript.tsx",
+	},
+	root_markers = { "tsconfig.json", "package.json", "jsconfig.json", ".git" },
 	capabilities = capabilities,
 	on_attach = on_attach,
 	single_file_support = true,
-})
+}
+vim.lsp.enable("ts_ls")
 
-lspconfig.lua_ls.setup({
+vim.lsp.config["lua_ls"] = {
+	cmd = { "lua-language-server" },
+	filetypes = { "lua" },
 	capabilities = capabilities,
 	on_attach = on_attach,
+	single_file_support = true,
 	settings = {
 		Lua = {
 			-- make the language server recognize "vim" global
@@ -196,4 +244,5 @@ lspconfig.lua_ls.setup({
 			},
 		},
 	},
-})
+}
+vim.lsp.enable("lua_ls")
