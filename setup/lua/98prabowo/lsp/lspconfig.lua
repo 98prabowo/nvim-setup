@@ -181,6 +181,39 @@ vim.lsp.config["rust_analyzer"] = {
 }
 vim.lsp.enable("rust_analyzer")
 
+vim.lsp.config["solidity"] = {
+	cmd = { "solidity-ls", "--stdio" },
+	filetypes = { "solidity" },
+	capabilities = capabilities,
+	on_attach = on_attach,
+	root_markers = {
+		"hardhat.config.js",
+		"hardhat.config.ts",
+		"foundry.toml",
+		"remappings.txt",
+		"truffle.js",
+		"truffle-config.js",
+		"ape-config.yaml",
+		".git",
+		"package.json",
+	},
+	settings = {
+		solidity = {
+			includePath = "lib",
+			remapping = {
+				["forge-std"] = "lib/forge-std/src/",
+				["@OpenZeppelin/"] = "OpenZeppelin/openzeppelin-contracts@4.6.0/",
+				["@openzeppelin/"] = "openzeppelin-contracts/",
+				["@chainlink/contracts/"] = "lib/chainlink-evm/contracts/",
+				["openzeppelin-contracts/"] = "lib/openzeppelin-contracts/",
+				["@uniswap/v3-core/"] = "lib/v3-core/",
+				["@uniswap/v3-periphery"] = "lib/v3-periphery/",
+			},
+		},
+	},
+}
+vim.lsp.enable("solidity")
+
 vim.lsp.config["sourcekit"] = {
 	cmd = { "sourcekit-lsp" },
 	filetypes = { "swift", "objective-c", "objective-cpp" },
