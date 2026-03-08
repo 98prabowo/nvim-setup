@@ -27,17 +27,21 @@ mason.setup()
 mason_lspconfig.setup({
 	-- list of servers for mason to install
 	ensure_installed = {
-		"arduino_language_server", -- Arduino
 		"bashls", -- Bash/ZSH
 		"clangd", -- C
+		"css-lsp", -- CSS
 		"gopls", -- Golang
 		"graphql", -- GraphQL
-		"jedi_language_server", -- Python
+		"html-lsp", -- HTML
 		"jsonls", -- JSON
 		"lemminx", -- XML
 		"lua_ls", -- Lua
+		"pyright", -- Python
+		"ruff", -- Python
 		"rust_analyzer", -- Rust
+		"nomicfoundation-solidity-language-server", -- Solidity
 		"sqlls", -- SQL
+		"ts_ls", -- TS
 		"yamlls", -- YAML
 	},
 	-- auto-install configured servers (with lspconfig)
@@ -53,10 +57,6 @@ mason_null_ls.setup({
 
 		-- Lua
 		"stylua", -- lua formatter
-
-		-- Python
-		"black", -- python formatter
-		"isort", -- python sorter
 
 		-- Golang
 		"gofmt", -- golang formatter

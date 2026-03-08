@@ -49,14 +49,6 @@ end
 -- used to enable autocompletion (assign to every lsp server config)
 local capabilities = cmp_nvim_lsp.default_capabilities()
 
-vim.lsp.config["arduino_language_server"] = {
-	cmd = { "arduino_language_server" },
-	filetypes = { "arduino" },
-	capabilities = capabilities,
-	on_attach = on_attach,
-}
-vim.lsp.enable("arduino_language_server")
-
 vim.lsp.config["bashls"] = {
 	cmd = { "bash-language-server", "start" },
 	filetypes = { "sh", "bash" },
@@ -74,8 +66,6 @@ vim.lsp.config["clangd"] = {
 vim.lsp.enable("clangd")
 
 vim.lsp.config["cssls"] = {
-	cmd = { "vscode-css-language-server", "--stdio" },
-	filetypes = { "css", "scss", "less" },
 	capabilities = capabilities,
 	on_attach = on_attach,
 }
@@ -98,24 +88,12 @@ vim.lsp.config["graphql"] = {
 vim.lsp.enable("graphql")
 
 vim.lsp.config["html"] = {
-	cmd = { "vscode-html-language-server", "--stdio" },
-	filetypes = { "html" },
 	capabilities = capabilities,
 	on_attach = on_attach,
 }
 vim.lsp.enable("html")
 
-vim.lsp.config["jedi_language_server"] = {
-	cmd = { "jedi-language-server" },
-	filetypes = { "python" },
-	capabilities = capabilities,
-	on_attach = on_attach,
-}
-vim.lsp.enable("jedi_language_server")
-
 vim.lsp.config["jsonls"] = {
-	cmd = { "vscode-json-languageserver", "--stdio" },
-	filetypes = { "json", "jsonc" },
 	capabilities = capabilities,
 	on_attach = on_attach,
 	single_file_support = true,
@@ -129,6 +107,48 @@ vim.lsp.config["lemminx"] = {
 	on_attach = on_attach,
 }
 vim.lsp.enable("lemminx")
+
+vim.lsp.config["lua_ls"] = {
+	cmd = { "lua-language-server" },
+	filetypes = { "lua" },
+	capabilities = capabilities,
+	on_attach = on_attach,
+	single_file_support = true,
+	settings = {
+		Lua = {
+			-- make the language server recognize "vim" global
+			diagnostics = {
+				globals = { "vim" },
+			},
+			workspace = {
+				-- make language server aware of runtime files
+				library = {
+					[vim.fn.expand("$VIMRUNTIME/lua")] = true,
+					[vim.fn.stdpath("config") .. "/lua"] = true,
+				},
+			},
+		},
+	},
+}
+vim.lsp.enable("lua_ls")
+
+vim.lsp.config["pyright"] = {
+	cmd = { "pyright-langserver", "--stdio" },
+	filetypes = { "python" },
+	capabilities = capabilities,
+	on_attach = on_attach,
+}
+vim.lsp.enable("pyright")
+
+vim.lsp.config["ruff"] = {
+	cmd = { "ruff", "server" },
+	filetypes = { "python" },
+	root_markers = { "pyproject.toml", "ruff.toml", ".ruff.toml", ".git" },
+	settings = {},
+	capabilities = capabilities,
+	on_attach = on_attach,
+}
+vim.lsp.enable("ruff")
 
 vim.lsp.config["rust_analyzer"] = {
 	cmd = { "rust-analyzer" },
@@ -182,7 +202,7 @@ vim.lsp.config["rust_analyzer"] = {
 vim.lsp.enable("rust_analyzer")
 
 vim.lsp.config["solidity"] = {
-	cmd = { "solidity-ls", "--stdio" },
+	cmd = { "nomicfoundation-solidity-language-server", "--stdio" },
 	filetypes = { "solidity" },
 	capabilities = capabilities,
 	on_attach = on_attach,
@@ -200,7 +220,7 @@ vim.lsp.config["solidity"] = {
 	settings = {
 		solidity = {
 			includePath = "lib",
-			remapping = {
+			remappings = {
 				["forge-std"] = "lib/forge-std/src/",
 				["@OpenZeppelin/"] = "OpenZeppelin/openzeppelin-contracts@4.6.0/",
 				["@openzeppelin/"] = "openzeppelin-contracts/",
@@ -255,27 +275,3 @@ vim.lsp.config["ts_ls"] = {
 	single_file_support = true,
 }
 vim.lsp.enable("ts_ls")
-
-vim.lsp.config["lua_ls"] = {
-	cmd = { "lua-language-server" },
-	filetypes = { "lua" },
-	capabilities = capabilities,
-	on_attach = on_attach,
-	single_file_support = true,
-	settings = {
-		Lua = {
-			-- make the language server recognize "vim" global
-			diagnostics = {
-				globals = { "vim" },
-			},
-			workspace = {
-				-- make language server aware of runtime files
-				library = {
-					[vim.fn.expand("$VIMRUNTIME/lua")] = true,
-					[vim.fn.stdpath("config") .. "/lua"] = true,
-				},
-			},
-		},
-	},
-}
-vim.lsp.enable("lua_ls")
