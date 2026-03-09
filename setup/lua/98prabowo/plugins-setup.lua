@@ -1,178 +1,209 @@
-local fn = vim.fn
-
--- Automatically install packer
-local ensure_packer = function()
-	local install_path = fn.stdpath("data") .. "/site/pack/packer/start/packer.nvim"
-	if fn.empty(fn.glob(install_path)) > 0 then
-		fn.system({ "git", "clone", "--depth", "1", "https://github.com/wbthomason/packer.nvim", install_path })
-		vim.cmd([[packadd packer.nvim]])
-		return true
+local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+if not vim.uv.fs_stat(lazypath) then
+	local lazyrepo = "https://github.com/folke/lazy.nvim.git"
+	local out = vim.fn.system({ "git", "clone", "--filter=blob:none", "--branch=stable", lazyrepo, lazypath })
+	if vim.v.shell_error ~= 0 then
+		vim.api.nvim_echo({
+			{ "Failed to clone lazy.nvim:\n", "ErrorMsg" },
+			{ out, "WarningMsg" },
+			{ "\nPress any key to exit..." },
+		}, true, {})
+		vim.fn.getchar()
+		os.exit(1)
 	end
-	return false
 end
+vim.opt.rtp:prepend(lazypath)
 
-local packer_bootstrap = ensure_packer() -- true if packer was just installed
+-- Make sure to setup `mapleader` and `maplocalleader` before
+-- loading lazy.nvim so that mappings are correct.
+-- This is also a good place to setup other settings (vim.opt)
+vim.g.mapleader = " "
+vim.g.maplocalleader = "\\"
 
--- Auto command that reloads neovim whenever you save this file
-vim.cmd([[
-  augroup packer_user_config
-    autocmd!
-    autocmd BufWritePost plugins-setup.lua source <afile> | PackerSync
-  augroup end
-]])
+-- Setup lazy.nvim
+require("lazy").setup({
+	-- Library & Icons
+	"nvim-lua/plenary.nvim",
+	"nvim-tree/nvim-web-devicons",
 
-local status, packer = pcall(require, "packer")
-
-if not status then
-	return
-end
-
--- Have packer use a popup window
-packer.init({
-	display = {
-		open_fn = function()
-			return require("packer.util").float({ border = "rounded" })
+	-- UI & Appearance
+	"ellisonleao/gruvbox.nvim",
+	"szw/vim-maximizer",
+	{
+		"nvim-lualine/lualine.nvim",
+		config = function()
+			require("98prabowo.plugins.lualine")
 		end,
 	},
-})
-
-return packer.startup(function(use)
-	-- Packer can manage itself
-	use("wbthomason/packer.nvim")
-
-	-- lua functions that many plugins use
-	use("nvim-lua/plenary.nvim")
-
-	-- colorscheme
-	use("ellisonleao/gruvbox.nvim")
-
-	-- tmux & split window navigation
-	use("christoomey/vim-tmux-navigator")
-
-	-- Maximizes and restores current window
-	use("szw/vim-maximizer")
-
-	-- Essential plugins
-	use("tpope/vim-surround")
-	use("vim-scripts/ReplaceWithRegister")
-
-	-- Commenting with gc
-	use("numToStr/Comment.nvim")
-
-	-- File explorer
-	use("nvim-tree/nvim-tree.lua")
-
-	-- Dashboard
-	use({
+	{
 		"goolord/alpha-nvim",
-		requires = { "nvim-tree/nvim-web-devicons" },
-	})
+		dependencies = { "nvim-tree/nvim-web-devicons" },
+		config = function()
+			require("98prabowo.plugins.dashboard")
+		end,
+	},
+	{
+		"mbbill/undotree",
+		config = function()
+			require("98prabowo.plugins.undotree")
+		end,
+	},
 
-	-- VScode like icons
-	use("nvim-tree/nvim-web-devicons")
+	-- Navigation & Utils
+	"christoomey/vim-tmux-navigator",
+	"tpope/vim-surround",
+	"vim-scripts/ReplaceWithRegister",
+	{
+		"numToStr/Comment.nvim",
+		config = function()
+			require("98prabowo.plugins.comment")
+		end,
+	},
+	{
+		"nvim-tree/nvim-tree.lua",
+		config = function()
+			require("98prabowo.plugins.nvim-tree")
+		end,
+	},
 
-	-- statusline
-	use("nvim-lualine/lualine.nvim")
-
-	-- fuzzy finding w/ telescope
-	use({ "nvim-telescope/telescope-fzf-native.nvim", run = "make" }) -- dependency for better sorting performance
-	use({ "nvim-telescope/telescope.nvim", branch = "0.1.x", requires = { { "nvim-lua/plenary.nvim" } } }) -- fuzzy finder
-
-	-- undo history tree
-	use("mbbill/undotree")
-
-	-- autocompletion
-	use("hrsh7th/nvim-cmp") -- completion plugin
-	use("hrsh7th/cmp-buffer") -- source for text in buffer
-	use("hrsh7th/cmp-path") -- source for file system paths
-
-	-- snippets
-	use({ "L3MON4D3/LuaSnip", build = "make install_jsregexp" }) -- snippet engine
-	use("saadparwaiz1/cmp_luasnip") -- for autocompletion
-	use("rafamadriz/friendly-snippets") -- useful snippets
-
-	-- managing & installing lsp servers, linters & formatters
-	use("mason-org/mason.nvim") -- in charge of managing lsp servers, linters & formatters
-	use("mason-org/mason-lspconfig.nvim") -- bridges gap b/w mason & lspconfig
-
-	-- configuring lsp servers
-	use("neovim/nvim-lspconfig") -- easily configure language servers
-	use("hrsh7th/cmp-nvim-lsp") -- for autocompletion
-	use({
-		"nvimdev/lspsaga.nvim",
-		requires = {
-			{ "nvim-tree/nvim-web-devicons" },
-			{ "nvim-treesitter/nvim-treesitter" },
+	-- Search (Telescope)
+	{
+		"nvim-telescope/telescope.nvim",
+		version = "*",
+		dependencies = {
+			"nvim-lua/plenary.nvim",
+			{ "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
 		},
-	}) -- enhanced lsp uis
-	use("onsails/lspkind.nvim") -- vs-code like icons for autocompletion
-	use("lvimuser/lsp-inlayhints.nvim") -- inline hint
+		config = function()
+			require("98prabowo.plugins.telescope")
+		end,
+	},
 
-	-- cargo crates helper
-	use({
+	-- Treesitter
+	{
+		"nvim-treesitter/nvim-treesitter",
+		lazy = false,
+		build = ":TSUpdate",
+		config = function()
+			require("98prabowo.plugins.treesitter")
+		end,
+	},
+
+	-- LSP Management
+	{
+		"williamboman/mason.nvim",
+		dependencies = {
+			"williamboman/mason-lspconfig.nvim",
+			"jay-babu/mason-null-ls.nvim",
+			"jay-babu/mason-nvim-dap.nvim",
+		},
+		config = function()
+			require("98prabowo.lsp.mason")
+		end,
+	},
+	{
+		"neovim/nvim-lspconfig",
+		dependencies = {
+			"hrsh7th/cmp-nvim-lsp",
+		},
+		config = function()
+			require("98prabowo.lsp.lspconfig")
+		end,
+	},
+	{
+		"nvimdev/lspsaga.nvim",
+		dependencies = { "nvim-tree/nvim-web-devicons", "nvim-treesitter/nvim-treesitter" },
+		config = function()
+			require("98prabowo.lsp.lspsaga")
+		end,
+	},
+	"lvimuser/lsp-inlayhints.nvim",
+
+	-- Autocompletion & Snippets
+	{
+		"hrsh7th/nvim-cmp",
+		event = "InsertEnter",
+		dependencies = {
+			"hrsh7th/cmp-buffer",
+			"hrsh7th/cmp-path",
+			{ "L3MON4D3/LuaSnip", build = "make install_jsregexp" },
+			"saadparwaiz1/cmp_luasnip",
+			"rafamadriz/friendly-snippets",
+			"onsails/lspkind.nvim",
+		},
+		config = function()
+			require("98prabowo.plugins.nvim-cmp")
+		end,
+	},
+
+	-- Formatting & Linting (None-ls)
+	{
+		"nvimtools/none-ls.nvim",
+		config = function()
+			require("98prabowo.lsp.none-ls")
+		end,
+	},
+
+	-- Debugger (DAP)
+	{
+		"mfussenegger/nvim-dap",
+		dependencies = {
+			"rcarriga/nvim-dap-ui",
+			"nvim-neotest/nvim-nio", -- Diperlukan oleh dap-ui terbaru
+			"williamboman/mason.nvim",
+			"nvim-telescope/telescope-dap.nvim",
+		},
+		config = function()
+			-- Lazy menjamin dap & dapui sudah ada sebelum baris ini dijalankan
+			require("98prabowo.lsp.dap")
+		end,
+	},
+
+	-- Programming Languages Specific
+	{
 		"Saecki/crates.nvim",
 		tag = "stable",
-		requires = { "nvim-lua/plenary.nvim" },
-	})
-
-	-- highlight comment mark
-	use({
-		"folke/todo-comments.nvim",
-		requires = { "nvim-lua/plenary.nvim" },
-	})
-
-	-- formatting & linting
-	use("nvimtools/none-ls.nvim") -- configure formatters & linters
-	use("jay-babu/mason-null-ls.nvim") -- bridges gap b/w mason & null-ls
-
-	-- debugger
-	use({ "mfussenegger/nvim-dap" })
-	use({
-		"rcarriga/nvim-dap-ui",
-		requires = {
-			"mfussenegger/nvim-dap",
-			"nvim-neotest/nvim-nio",
-		},
-	})
-	use({
-		"jay-babu/mason-nvim-dap.nvim",
-		requires = { "williamboman/mason.nvim" },
-	})
-	use({
-		"nvim-telescope/telescope-dap.nvim",
-		requires = { "mfussenegger/nvim-dap" },
-	})
-
-	-- treesitter configuration
-	use({
-		"nvim-treesitter/nvim-treesitter",
-		run = function()
-			local ts_update = require("nvim-treesitter.install").update({ with_sync = true })
-			ts_update()
+		config = function()
+			require("98prabowo.plugins.crates")
 		end,
-	})
+	},
+	{
+		"folke/todo-comments.nvim",
+		dependencies = { "nvim-lua/plenary.nvim" },
+		config = function()
+			require("98prabowo.plugins.todo-comment")
+		end,
+	},
 
-	-- auto closing
-	use("windwp/nvim-autopairs") -- autoclose parens, brackets, quotes, etc...
-	use({ "windwp/nvim-ts-autotag", after = "nvim-treesitter" }) -- autoclose tags
+	-- Git
+	{
+		"lewis6991/gitsigns.nvim",
+		config = function()
+			require("98prabowo.plugins.gitsign")
+		end,
+	},
+	"tpope/vim-fugitive",
 
-	-- git integration
-	use("lewis6991/gitsigns.nvim") -- show line modifications on left hand side
-	use("tpope/vim-fugitive") -- git command helper
+	-- Automation
+	{
+		"windwp/nvim-autopairs",
+		config = function()
+			require("98prabowo.plugins.autopairs")
+		end,
+	},
 
-	-- leetcode
-	use({
+	-- Leetcode
+	{
 		"kawre/leetcode.nvim",
-		requires = {
-			"nvim-lua/plenary.nvim",
-			"MunifTanjim/nui.nvim",
-			"nvim-telescope/telescope.nvim",
-		},
-	})
+		dependencies = { "MunifTanjim/nui.nvim" },
+		config = function()
+			require("98prabowo.plugins.leetcode")
+		end,
+	},
 
-	-- Automatically set up your configuration after cloning packer.nvim
-	-- Put this at the :PackerCompile end after all plugins
-	if packer_bootstrap then
-		require("packer").sync()
-	end
-end)
+	-- -- Configure any other settings here. See the documentation for more details.
+	-- -- colorscheme that will be used when installing plugins.
+	-- install = { colorscheme = { "habamax" } },
+	-- automatically check for plugin updates
+	checker = { enabled = true },
+})

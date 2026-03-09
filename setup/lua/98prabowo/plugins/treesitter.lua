@@ -1,32 +1,53 @@
-local treesitter_status, treesitter = pcall(require, "nvim-treesitter.configs")
+local treesitter_status, treesitter = pcall(require, "nvim-treesitter")
 if not treesitter_status then
 	vim.notify("treesitter not installed", vim.log.levels.ERROR)
 	return
 end
 
 treesitter.setup({
-	-- enable syntax highlighting
-	highlight = {
-		enable = true,
-	},
-	-- enable indentation
-	indent = { enable = true },
-	-- enable autotagging (w/ nvim-ts-autotag plugin)
-	autotag = { enable = true },
-	-- ensure these language parsers are installed
-	ensure_installed = {
+	install_dir = vim.fn.stdpath("data") .. "/site",
+})
+
+treesitter.install({
+	"bash",
+	"c",
+	"css",
+	"dockerfile",
+	"gitignore",
+	"go",
+	"gomod",
+	"gotmpl",
+	"gowork",
+	"graphql",
+	"html",
+	"json",
+	"lua",
+	"markdown",
+	"markdown_inline",
+	"python",
+	"rust",
+	"swift",
+	"sql",
+	"toml",
+	"vim",
+	"yaml",
+})
+
+vim.api.nvim_create_autocmd("FileType", {
+	pattern = {
 		"bash",
 		"c",
 		"css",
 		"dockerfile",
-		"gitignore",
 		"go",
+		"gomod",
+		"gotmpl",
+		"gowork",
 		"graphql",
 		"html",
 		"json",
 		"lua",
 		"markdown",
-		"markdown_inline",
 		"python",
 		"rust",
 		"swift",
@@ -35,12 +56,14 @@ treesitter.setup({
 		"vim",
 		"yaml",
 	},
-	-- enable rainbow
-	rainbow = {
-		enable = true,
-		extended_mode = true,
-		max_file_lines = nil,
-	},
-	-- auto install above language parsers
-	auto_install = true,
+	callback = function()
+		vim.treesitter.start()
+	end,
+})
+
+vim.api.nvim_create_autocmd("FileType", {
+	pattern = { "lua", "rust", "python", "javascript", "go" },
+	callback = function()
+		vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+	end,
 })
