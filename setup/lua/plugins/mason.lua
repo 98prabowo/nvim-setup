@@ -2,16 +2,18 @@ return {
 	"williamboman/mason.nvim",
 	dependencies = {
 		"williamboman/mason-lspconfig.nvim",
-		"jay-babu/mason-null-ls.nvim",
+		"WhoIsSethDaniel/mason-tool-installer.nvim",
 		"jay-babu/mason-nvim-dap.nvim",
 	},
 	config = function()
 		local mason = require("mason")
 		local mason_lspconfig = require("mason-lspconfig")
-		local mason_null_ls = require("mason-null-ls")
+		local mason_tool_installer = require("mason-tool-installer")
 		local mason_nvim_dap = require("mason-nvim-dap")
 
-		mason.setup()
+		mason.setup({
+			ui = { border = "rounded" },
+		})
 
 		mason_lspconfig.setup({
 			-- list of servers for mason to install
@@ -40,7 +42,7 @@ return {
 			automatic_enable = false,
 		})
 
-		mason_null_ls.setup({
+		mason_tool_installer.setup({
 			-- list of formatters & linters for mason to install
 			ensure_installed = {
 				-- JavaScript / TypeScript
@@ -49,34 +51,34 @@ return {
 				-- Lua
 				"stylua", -- lua formatter
 
+				-- Python
+				"black",
+				"isort",
+
 				-- Golang
-				"gofmt", -- golang formatter
 				"goimports", -- golang auto imports
-				"goimports_reviser", -- golang ordering imports
-				"golangci_lint", -- golang diagnostic
+				"goimports-reviser", -- golang ordering imports
+				"golangci-lint", -- golang diagnostic
 				"impl", -- golang action
 
 				-- C, C++, C#, Java, Cuda
-				"clang_format", -- c, c++, c#, java, cuda formatter
+				"clang-format", -- c, c++, c#, java, cuda formatter
+
+				-- Java
+				"google-java-format", -- java formatter with google style
+
+				-- SQL
+				"sqlfluff", -- sql linter/formatter
 
 				-- Swift
 				"swiftformat", -- swift formatter
 				"swiftlint", -- swift linter
 
-				-- Java
-				"google_java_format", -- java formatter with google style
-
-				-- Kotlin
-				"ktlint", -- kotlin formatter and diagnostic
-
-				-- SQL
-				"sqlfluff", -- sql linter/formatter
+				-- Shell
+				"shfmt", -- shell formatter
 
 				-- YAML
 				"yamllint", -- yaml linter
-
-				-- Shell
-				"shfmt", -- shell formatter
 			},
 			-- auto-install configured formatters & linters (with null-ls)
 			automatic_installation = true,
