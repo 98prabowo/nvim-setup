@@ -201,7 +201,7 @@ vim.lsp.config["rust_analyzer"] = {
 }
 vim.lsp.enable("rust_analyzer")
 
-vim.lsp.config["solidity"] = {
+vim.lsp.config["solidity_ls_nomicfoundation"] = {
 	cmd = { "nomicfoundation-solidity-language-server", "--stdio" },
 	filetypes = { "solidity" },
 	capabilities = capabilities,
@@ -232,7 +232,7 @@ vim.lsp.config["solidity"] = {
 		},
 	},
 }
-vim.lsp.enable("solidity")
+vim.lsp.enable("solidity_ls_nomicfoundation")
 
 vim.lsp.config["sourcekit"] = {
 	cmd = { "sourcekit-lsp" },

@@ -29,18 +29,20 @@ mason_lspconfig.setup({
 	ensure_installed = {
 		"bashls", -- Bash/ZSH
 		"clangd", -- C
-		"css-lsp", -- CSS
+		"cssls", -- CSS
 		"gopls", -- Golang
 		"graphql", -- GraphQL
-		"html-lsp", -- HTML
+		"html", -- HTML
 		"jsonls", -- JSON
 		"lemminx", -- XML
+		"ltex", -- Latex
 		"lua_ls", -- Lua
 		"pyright", -- Python
 		"ruff", -- Python
 		"rust_analyzer", -- Rust
-		"nomicfoundation-solidity-language-server", -- Solidity
+		"solidity_ls_nomicfoundation", -- Solidity
 		"sqlls", -- SQL
+		"stylua", -- Lua
 		"ts_ls", -- TS
 		"yamlls", -- YAML
 	},
