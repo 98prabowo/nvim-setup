@@ -40,3 +40,12 @@ opt.splitright = true
 opt.splitbelow = true
 
 opt.iskeyword:append("-")
+
+-- set leader key to space
+vim.g.mapleader = " "
+vim.g.maplocalleader = "\\"
+
+-- disable neovim
+vim.g.loaded_perl_provider = 0
+vim.g.python3_host_prog = vim.fn.system("pyenv which python3"):gsub("%s+", "")
+vim.g.ruby_host_prog = os.getenv("HOME") .. "/.rbenv/shims/ruby"
