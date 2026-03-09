@@ -175,7 +175,7 @@ return {
 						},
 						closingBraceHints = {
 							enable = true,
-							minLines = 250,
+							minLines = 50,
 						},
 						closureReturnTypeHints = {
 							enable = true,
